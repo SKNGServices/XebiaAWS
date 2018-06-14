@@ -1,0 +1,131 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Metadata": {
+        "AWS::CloudFormation::Designer": {
+            "cc4dc573-3be0-452d-9ab7-9fdc7e9e1f7b": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": -89.5,
+                    "y": 206.16666666666669
+                },
+                "z": 1,
+                "parent": "ed08babe-85aa-4c63-80d0-2ad06ba0cfe0",
+                "embeds": [],
+                "iscontainedinside": [
+                    "ed08babe-85aa-4c63-80d0-2ad06ba0cfe0",
+                    "ed08babe-85aa-4c63-80d0-2ad06ba0cfe0",
+                    "ed08babe-85aa-4c63-80d0-2ad06ba0cfe0",
+                    "ed08babe-85aa-4c63-80d0-2ad06ba0cfe0",
+                    "ed08babe-85aa-4c63-80d0-2ad06ba0cfe0",
+                    "ed08babe-85aa-4c63-80d0-2ad06ba0cfe0",
+                    "ed08babe-85aa-4c63-80d0-2ad06ba0cfe0",
+                    "ed08babe-85aa-4c63-80d0-2ad06ba0cfe0",
+                    "ed08babe-85aa-4c63-80d0-2ad06ba0cfe0",
+                    "ed08babe-85aa-4c63-80d0-2ad06ba0cfe0"
+                ]
+            },
+            "ed08babe-85aa-4c63-80d0-2ad06ba0cfe0": {
+                "size": {
+                    "width": 140,
+                    "height": 140
+                },
+                "position": {
+                    "x": -130,
+                    "y": 160
+                },
+                "z": 0,
+                "embeds": [
+                    "cc4dc573-3be0-452d-9ab7-9fdc7e9e1f7b"
+                ]
+            },
+            "c934493d-ba39-48ad-96e9-e3364e058830": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": -290,
+                    "y": 200
+                },
+                "z": 0,
+                "embeds": [],
+                "dependson": [
+                    "cc4dc573-3be0-452d-9ab7-9fdc7e9e1f7b"
+                ]
+            }
+        }
+    },
+    "Resources": {
+        "RDSDBI42ZLY": {
+            "Type": "AWS::RDS::DBInstance",
+            "Properties": {
+                "AllocatedStorage": "30",
+                "DBInstanceClass": "db.t2.medium",
+                "MasterUsername": "xebia",
+                "MasterUserPassword": "mypassword",
+                "DBName": "",
+                "DBSubnetGroupName": {
+                    "Ref": "RDSDBSG49UHC"
+                },
+                "Engine": "postgres",
+                "EngineVersion": "9.6.8",
+                "MultiAZ": "false"
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "cc4dc573-3be0-452d-9ab7-9fdc7e9e1f7b"
+                }
+            }
+        },
+        "RDSDBSG49UHC": {
+            "Type": "AWS::RDS::DBSubnetGroup",
+            "Properties": {
+                "DBSubnetGroupDescription": "rdsdatabases",
+                "DBSubnetGroupName": "dbsubnet",
+                "SubnetIds": [
+                    {
+                        "Ref": "Subnet1Id"
+                    },
+                    {
+                        "Ref": "Subnet2Id"
+                    }
+                ]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "ed08babe-85aa-4c63-80d0-2ad06ba0cfe0"
+                }
+            }
+        },
+        "EC2I32IMY": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "InstanceType": "t2.medium",
+                "SubnetId": {
+                    "Ref": "Subnet1Id"
+                }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "c934493d-ba39-48ad-96e9-e3364e058830"
+                }
+            },
+            "DependsOn": [
+                "RDSDBI42ZLY"
+            ]
+        }
+    },
+    "Parameters": {
+        "Subnet1Id": {
+            "Type": "AWS::EC2::Subnet::Id",
+            "Description": "SubnetId of your primary subnet"
+        },
+        "Subnet2Id": {
+            "Type": "AWS::EC2::Subnet::Id",
+            "Description": "SubnetId of your secondary subnet"
+        }
+    }
+}
